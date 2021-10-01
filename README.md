@@ -35,7 +35,7 @@ await user.login(username, password);
 // login: required
 await user.editProfile(id, name)
 
-// generate an api key with the current account
+// generate an api key with the current account (requires unlimited account)
 // login: required
 const key = await user.generateApiKey();
 
