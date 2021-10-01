@@ -22,7 +22,11 @@ class steamUser {
         this.isLoggedIn = false;
     }
 
-    encrypt_password = (username, password) => new Promise(async (resolve, reject) => {
+    setApiKey(apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    encryptPassword = (username, password) => new Promise(async (resolve, reject) => {
         const res = await fetch(`https://steamcommunity.com/login/getrsakey/`, {
             method: "POST",
             body: stringify({
@@ -39,12 +43,13 @@ class steamUser {
         const key = new RSA();
         key.setPublic(mod, exp);
 
-        const encrypted_password = hex2b64(key.encrypt(password));
-        resolve([encrypted_password, json["timestamp"]]);
+        const encryptedPassword = hex2b64(key.encrypt(password));
+        resolve([encryptedPassword, json["timestamp"]]);
     });
 
     getID = (id64) => new Promise(async (resolve, reject) => {
-        const res = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=&steamids=${id64}`);
+        if(!this.apiKey) reject("no api key set");
+        const res = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${this.apiKey}&steamids=${id64}`);
         const json = await res.json();
         const id = json.response.players[0].profileurl.split('/')[4];
         resolve(id);
@@ -70,14 +75,14 @@ class steamUser {
             captcha_text = captcha_text || "";
             twofactorcode = twofactorcode || "";
 
-            const [encrypted_password, rsatimestamp] = await this.encrypt_password(username, password);
+            const [encryptedPassword, timestamp] = await this.encryptPassword(username, password);
 
             const res = await fetch(`https://steamcommunity.com/login/dologin/`, {
                 method: "POST",
                 body: stringify({
                     username: username,
-                    password: encrypted_password,
-                    rsatimestamp: rsatimestamp,
+                    password: encryptedPassword,
+                    rsatimestamp: timestamp,
                     remember_login: "true",
                     captchagid: captchagid,
                     captcha_text: captcha_text,
@@ -120,7 +125,6 @@ class steamUser {
 
             this.isLoggedIn = json.success;
             this.steamid64 = json["transfer_parameters"]["steamid"];
-            this.id = await this.getID(this.steamid64);
             this.cookie = json["transfer_parameters"]["steamid"] + "%7C%7C" + json["transfer_parameters"]["token_secure"];
             this.sessionid = await this.getSessionID(this.cookie);
 
@@ -132,8 +136,8 @@ class steamUser {
     });
 
     editProfile = (id, name) => new Promise(async (resolve, reject) => {
-        if (!this.isLoggedIn) return console.log("not logged in.");
-        if (!id && !name) return console.log("no id or name provided.");
+        if (!this.isLoggedIn) reject("you need to be logged in to use this.");
+        if (!id && !name) reject("no id or name provided.");
 
         let data = {
             json: 1,
@@ -160,7 +164,7 @@ class steamUser {
         resolve();
     });
 
-    getApiKey = () => new Promise(async (resolve, reject) => {
+    autoSetApiKey = () => new Promise(async (resolve, reject) => {
         await fetch("https://steamcommunity.com/dev/revokekey/", {
             method: "POST",
             body: stringify({
