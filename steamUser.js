@@ -27,6 +27,8 @@ class steamUser {
     }
 
     encryptPassword = (username, password) => new Promise(async (resolve, reject) => {
+        if (this.isLoggedIn) reject("this function should only be called when logging in.");
+
         const res = await fetch(`https://steamcommunity.com/login/getrsakey/`, {
             method: "POST",
             body: stringify({
@@ -48,7 +50,7 @@ class steamUser {
     });
 
     getID = (id64) => new Promise(async (resolve, reject) => {
-        if(!this.apiKey) reject("no api key set");
+        if (!this.apiKey) reject("no api key set");
         const res = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${this.apiKey}&steamids=${id64}`);
         const json = await res.json();
         const id = json.response.players[0].profileurl.split('/')[4];
@@ -56,6 +58,8 @@ class steamUser {
     });
 
     getSessionID = (cookie) => new Promise(async (resolve, reject) => {
+        if (!this.isLoggedIn) reject("you need to be logged in to use this.");
+
         const res = await fetch(`https://steamcommunity.com/my/edit`, {
             method: "POST",
             headers: { Cookie: cookie },
@@ -164,7 +168,9 @@ class steamUser {
         resolve();
     });
 
-    autoSetApiKey = () => new Promise(async (resolve, reject) => {
+    generateApiKey = () => new Promise(async (resolve, reject) => {
+        if (!this.isLoggedIn) reject("you need to be logged in to use this.");
+
         await fetch("https://steamcommunity.com/dev/revokekey/", {
             method: "POST",
             body: stringify({
