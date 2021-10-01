@@ -22,6 +22,6 @@ user.setApiKey(apiKey);
 const id = await user.getID(id64);
 
 
-user object: 
+user object properties: 
 
 ```
