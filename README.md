@@ -1,5 +1,13 @@
 # steamapi
 (almost) everything you need to swap / autoclaim / turbo
+
+## dependencies
+```
+node-fetch
+form-data
+node-bignumber
+```
+
 ## example
 ```js
 const steamUser = require('./steamUser');
