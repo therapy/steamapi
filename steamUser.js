@@ -44,7 +44,7 @@ class steamUser {
     });
 
     getID = (id64) => new Promise(async (resolve, reject) => {
-        const res = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=EDC38FCE7F6997E8712B590D14E45005&steamids=${id64}`);
+        const res = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=&steamids=${id64}`);
         const json = await res.json();
         const id = json.response.players[0].profileurl.split('/')[4];
         resolve(id);
