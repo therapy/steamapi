@@ -9,6 +9,7 @@ node-bignumber
 ```
 
 ## example
+put steamUser.js in the same directory as your project
 ```js
 const steamUser = require('./steamUser');
 
