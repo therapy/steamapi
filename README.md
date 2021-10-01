@@ -22,10 +22,10 @@ user.setApiKey(apiKey);
 const id = await user.getID(id64);
 
 
-user object properties (after logging in): 
-
-user.isLoggedIn // -> boolean
-user.steamid64 // -> string
-user.cookie // -> string
-user.sessionid // -> string
+user object properties (after logging in): {
+  user.isLoggedIn // -> boolean
+  user.steamid64 // -> string
+  user.cookie // -> string
+  user.sessionid // -> string
+}
 ```
