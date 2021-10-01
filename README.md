@@ -1,5 +1,4 @@
 # steamapi
-(almost) everything you need to swap / autoclaim / turbo
 
 ## dependencies
 ```
