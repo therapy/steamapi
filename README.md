@@ -1,7 +1,21 @@
 # steamapi
 (almost) everything you need to swap / autoclaim / turbo
-## ""docs""
+## example
+```js
+const steamUser = require('./steamUser');
 
+let username = "";
+let password = "";
+
+(async () => {
+    const user = new steamUser();
+    await user.login(username, password);
+})();
+```
+
+`logged into ******** successfully`
+
+## ""docs""
 ```js
 // create instance
 const user = new steamUser();
