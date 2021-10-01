@@ -21,8 +21,8 @@ user.setApiKey(apiKey);
 // figure out the the current id linked to a profile
 const id = await user.getID(id64);
 
-
-user object properties /* (after logging in) */= {
+//user object properties (after logging in)
+steamUser = {
   user.isLoggedIn // -> boolean
   user.steamid64 // -> string
   user.cookie // -> string
