@@ -51,6 +51,7 @@ class steamUser {
 
     getID = (id64) => new Promise(async (resolve, reject) => {
         if (!this.apiKey) reject("no api key set");
+        
         const res = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${this.apiKey}&steamids=${id64}`);
         const json = await res.json();
         const id = json.response.players[0].profileurl.split('/')[4];
@@ -192,6 +193,10 @@ class steamUser {
         });
 
         const body = await res.text();
+
+        if(body.inlcudes("You will be granted access to Steam Web API keys when you have games in your Steam account.")) {
+            reject("your account is not unlimited.");
+        }
 
         const key = body.match(/<p>Key: (.*?)<\/p>/)[1];
         this.apiKey = key;
