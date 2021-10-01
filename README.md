@@ -14,4 +14,14 @@ await user.editProfile(id, name)
 
 //generate an api key with the current account
 const key = await user.generateApiKey();
+
+// set the apiKey manually (needed for getID())
+user.setApiKey(apiKey);
+
+// figure out the the current id linked to a profile
+const id = await user.getID(id64);
+
+
+user object: 
+
 ```
