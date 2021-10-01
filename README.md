@@ -24,18 +24,21 @@ const user = new steamUser();
 await user.login(username, password);
 
 // edit the profile (id claiming)
+// login: required
 await user.editProfile(id, name)
 
 // generate an api key with the current account
+// login: required
 const key = await user.generateApiKey();
 
 // set the apiKey manually (needed for getID())
 user.setApiKey(apiKey);
 
 // figure out the the current id linked to a profile
+// apiKey: required
 const id = await user.getID(id64);
 
-// user object properties (after logging in)
+// user object properties (some will be undefined if you are not logged in)
 steamUser = {
   user.isLoggedIn // -> boolean
   user.steamid64 // -> string
