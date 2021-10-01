@@ -1,5 +1,5 @@
 # steamapi
-basic steam api wrapper
+(almost) everything you need to swap / autoclaim / turbo
 ## ""docs""
 
 ```js
