@@ -123,8 +123,12 @@ class steamUser {
 
         this.isLoggedIn = json.success;
         this.steamid64 = json["transfer_parameters"]["steamid"];
-        this.cookie = json["transfer_parameters"]["steamid"] + "%7C%7C" + json["transfer_parameters"]["token_secure"];
-        this.sessionid = await this.getSessionID(this.cookie);
+        const loginsecure = json["transfer_parameters"]["steamid"] + "%7C%7C" + json["transfer_parameters"]["token_secure"];
+        const sessionid = await this.getSessionID(this.cookie);
+        this.cookie = `sessionid=${sessionid}; steamLoginSecure=${loginsecure};`;
+        this.sessionid = sessionid;
+
+        console.log(`logged into ${username} successfully`);
 
         console.log(`logged into ${username} successfully`);
     };
