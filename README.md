@@ -6,7 +6,7 @@ npm i
 ```
 
 ## example
-put steamUser.js in the same directory as your project
+put api.js in the same directory as your project
 ```js
 const api = require("./api");
 
