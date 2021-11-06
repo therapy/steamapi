@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "node-bignumber": "^1.2.2",
+    "phin": "^3.6.0"
+  }
+}
