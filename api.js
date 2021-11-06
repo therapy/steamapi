@@ -6,9 +6,7 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 const prompt = (query) => new Promise(resolve => rl.question(query, ans => { rl.close(); resolve(ans); }));
 
 class api {
-    async #getsessionid(cookie) {
-        if (!this.isLoggedIn) throw new Error("you need to be logged in to use this.");
-
+    static async #getsessionid(cookie) {
         const res = await p({
             method: "GET",
             url: `https://steamcommunity.com/my/edit`,
@@ -21,9 +19,7 @@ class api {
         return sessionid;
     };
 
-    async #encryptpassword(username, password) {
-        if (this.loggedin) throw new Error("this function should only be called when logging in.");
-
+    static async #encryptpassword(username, password) {
         const res = await p({
             method: "POST",
             url: `https://steamcommunity.com/login/getrsakey/`,
