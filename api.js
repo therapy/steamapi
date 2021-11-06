@@ -96,12 +96,12 @@ class api {
             return this.login(username, password, emailauth, emailsteamid, captchagid, captcha_text, twofactorcode);
         }
 
-        const steamid64 = json["transfer_parameters"]["steamid"];
+        const id64 = json["transfer_parameters"]["steamid"];
         const loginsecure = json["transfer_parameters"]["steamid"] + "%7C%7C" + json["transfer_parameters"]["token_secure"];
         const sessionid = await this.#getsessionid(loginsecure);
         const cookie = `sessionid=${sessionid}; steamLoginSecure=${loginsecure};`;
 
-        return { username, password, steamid64, cookie, sessionid };
+        return { username, password, id64, cookie, sessionid };
     };
 }
 
