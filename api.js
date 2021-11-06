@@ -101,7 +101,7 @@ class api {
         const sessionid = await this.#getsessionid(loginsecure);
         const cookie = `sessionid=${sessionid}; steamLoginSecure=${loginsecure};`;
 
-        return { username, password, id64, cookie, sessionid };
+        return { id64, cookie, sessionid };
     };
 }
 
