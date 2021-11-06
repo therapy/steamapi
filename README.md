@@ -8,15 +8,23 @@ npm i
 ## example
 put steamUser.js in the same directory as your project
 ```js
-const steamUser = require('./steamUser');
+const api = require("./api");
 
 let username = "";
 let password = "";
 
 (async () => {
-    const user = new steamUser();
-    await user.login(username, password);
+    const res = await api.login(username, password);
+    console.log(res);
 })();
 ```
 
-`logged into ******** successfully`
+`
+{
+  username: '*******',
+  password: '*******',
+  steamid64: '*****************',
+  cookie: 'sessionid=************************; steamLoginSecure=***************************************************************;',
+  sessionid: '************************'
+}
+`
