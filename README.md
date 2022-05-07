@@ -13,10 +13,8 @@ const api = require("./api");
 let username = "";
 let password = "";
 
-(async () => {
-    const res = await api.login(username, password);
-    console.log(res);
-})();
+const res = await api.login(username, password);
+console.log(res);
 ```
 
 ```
